@@ -28,6 +28,7 @@
     width: 410px;
     background-color: #4caf50;
     font-size: 20px;
+    font-family: monospace;
     color: white;
     border: none;
     cursor: pointer;
@@ -50,4 +51,17 @@
     100% {
       background-position: 100% 50%;
     }
+  }
+
+  .signup-footer {
+    text-decoration: none;
+    font-family:  monospace;
+    font-size: 1.2rem;
+  }
+
+  .error-message {
+    color: red;
+    font-size: 1.2rem;
+    font-family: monospace;
+    margin-top: 10px;
   }

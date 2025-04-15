@@ -8,7 +8,7 @@ from flask_cors import CORS
 from dotenv import load_dotenv
 from flask_socketio import SocketIO
 from flask_mongoengine import MongoEngine
-from app.routes.auth_routes import signup_bp
+from app.routes.auth_routes import signup_bp, login_bp
 from app.routes.socketio_routes import register_socketio_events
 
 load_dotenv()
@@ -19,8 +19,8 @@ socketio = SocketIO(cors_allowed_origins="*")
 def create_app():
     app = Flask(__name__)
     
-    # Configure logging
-    logging.basicConfig(level=logging.DEBUG)  # Or logging.INFO
+    #TODO: Configure logging
+    logging.basicConfig(level=logging.DEBUG) 
     handler = logging.StreamHandler()
     app.logger.addHandler(handler)
     app.logger.setLevel(logging.DEBUG)
@@ -30,11 +30,12 @@ def create_app():
 
     # --- Initialize Extensions ---
     db.init_app(app)
-    socketio.init_app(app)
     CORS(app)
+    socketio.init_app(app)
+    register_socketio_events(socketio)
 
     # --- Register Blueprints ---
     app.register_blueprint(signup_bp, url_prefix="/api")
-    register_socketio_events(socketio)
+    app.register_blueprint(login_bp, url_prefix="/api")
 
     return app

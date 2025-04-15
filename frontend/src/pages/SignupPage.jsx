@@ -3,14 +3,17 @@ import axios from 'axios';
 
 function SignupPage() {
   const [formData, setFormData] = useState({
+    // this is the data we will send to the backend
+    // usestate hook - to manage the state of the form data
     username: '',
     password: '',
     instrument: ''
   });
 
-  const [usernameError, setUsernameError] = useState('');
+  const [usernameError, setUsernameError] = useState(''); // state to manage username error messages
 
   const handleChange = (e) => {
+    // this function will handle the change in the input fields and update the state accordingly
     setFormData(prev => ({
       ...prev,
       [e.target.name]: e.target.value
@@ -22,12 +25,15 @@ function SignupPage() {
   };
 
   const handleSubmit = async (e) => {
+    // this function will handle the form submission and send the data to the backend
+    // it will also handle the response from the backend and redirect the user to the appropriate page
     e.preventDefault();
 
     const username = formData.username.trim();
     const hasLetter = /[a-zA-Z]/.test(username);
     const hasSpecialChars = /[^a-zA-Z0-9\s]/.test(username);
 
+    // Validate username
     if (!username) {
       setUsernameError('Username must contain at least one letter.');
       setFormData(prev => ({ ...prev, username: '' })); // Clear username
@@ -48,12 +54,15 @@ function SignupPage() {
       await axios.post('http://localhost:5000/api/signup', formData);
       alert("Signup successful! You can now log in.");
     } catch (error) {
+     
       if (error.response) {
         console.error("Signup failed:", error.response.data);
         alert(error.response.data.message || "Signup failed.");
+      
       } else if (error.request) {
         console.error("No response received:", error.request);
         alert("No response from server.");
+      
       } else {
         console.error("Unexpected error:", error.message);
         alert("Unexpected error: " + error.message);
@@ -77,6 +86,7 @@ function SignupPage() {
           required
         />
         {usernameError && <div className="error-message">{usernameError}</div>}
+        {/* Display username error message */}
 
         <input
           type="password"
@@ -93,15 +103,18 @@ function SignupPage() {
           required
         >
           <option value="">Select Instrument</option>
-          <option value="drums"> Drums</option>
-          <option value="guitar"> Guitar</option>
-          <option value="bass"> Bass</option>
-          <option value="saxophone"> Saxophone</option>
-          <option value="keyboard"> Keyboard</option>
-          <option value="vocals"> Vocals</option>
+          <option value="drums">🥁 Drums</option>
+          <option value="guitar">🎸 Guitar</option>
+          <option value="bass">🎶 Bass</option>
+          <option value="saxophone">🎷 Saxophone</option>
+          <option value="keyboard">🎹 Keyboard</option>
+          <option value="vocals">🎤 Vocals</option>
         </select>
-        <button type="submit">Register</button>
+        <button type="submit">Let's Jam!</button>
       </form>
+      <div className="signup-footer">
+        <p>Already have an account? <a href="/">Log in</a></p>
+      </div>
     </div>
   );
 }
