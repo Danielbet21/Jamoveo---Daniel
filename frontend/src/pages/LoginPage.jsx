@@ -1,19 +1,20 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 function LoginPage() {
 
   const [formData, setFormData] = useState({
-    // this is the data we will send to the backend
-    // usestate hook - to manage the state of the form data
     username: '',
     password: ''
   });
-  const navigate = useNavigate(); // useNavigate hook - navigate to different routes in the app
 
-  const [loginError, setLoginError] = useState(''); // state to manage login error messages
+  const [loginError, setLoginError] = useState('');
+  const navigate = useNavigate();
+  const location = useLocation();
 
+  const isAdmin = location.pathname.includes('/admin');
+  const loginUrl = isAdmin ? 'http://localhost:5000/api/admin/login' : 'http://localhost:5000/api/login';
     
   const handleChange = (e) => {
     // this function will handle the change in the input fields and update the state accordingly
@@ -29,7 +30,7 @@ function LoginPage() {
     // it will also handle the response from the backend and redirect the user to the appropriate page
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/login', formData);
+      const response = await axios.post(loginUrl, formData);
       const { redirect } = response.data;
       navigate(redirect); // Redirect to the specified URL
       alert("Redirecting to: " + redirect);
@@ -47,7 +48,7 @@ function LoginPage() {
   return (
     <div className="signup-container">
       <div className='signup-header'>
-        <h2>Login to JaMoveo</h2>
+        <h2>{isAdmin ? "Admin Login" : "Login to JaMoveo"}</h2>
       </div>
 
       <form onSubmit={handleSubmit} className="signup-form">
@@ -70,13 +71,15 @@ function LoginPage() {
         />
 
         {loginError && <div className="error-message">{loginError}</div>}
-        <button type="submit">Jam In!</button>
+        <button type="submit">{isAdmin ? "Enter Control Room" : "Jam In!"}</button>
       </form>
-      <div className="signup-footer">
-        <p>Don't have an account? <a href="/signup">Sign up</a></p>
-      </div>
+
+      {!isAdmin && (
+        <div className="signup-footer">
+          <p>Don't have an account? <a href="/signup">Sign up</a></p>
+        </div>
+      )}
     </div>
-   
   );
 }
 
