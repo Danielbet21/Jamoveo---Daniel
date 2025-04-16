@@ -1,3 +1,4 @@
+from app.utils.auth_utils import generate_token
 from flask import Blueprint, request, jsonify
 from app.dal import Dal
 import logging
@@ -61,17 +62,20 @@ def player_login():
     if dal.check_if_admin(user):
         return jsonify({'error': True, 'message': 'Admin must log in through its own route'}), 403
 
+    user.role = 'user' 
+    token = generate_token(user)
+
     return jsonify({
         'error': False,
-        'message': 'Player login successful',
-        'user': {
-            'username': user.username,
-            'instrument': user.instruments,
-            'role': 'user'
-        },
-        'redirect': '/player'
+    'message': 'Player login successful',
+    'token': token,
+    'redirect': '/player',
+    'user': {
+        'username': user.username,
+        'instrument': user.instruments,
+        'role': 'user'
+    }
     }), 200
-
 
 # ------------------------------------------------------
 # Admin Login Route
@@ -94,15 +98,19 @@ def admin_login():
     if not dal.check_if_admin(user):
         return jsonify({'error': True, 'message': 'Only admins can log in here'}), 403
 
+    user.role = 'admin' 
+    token = generate_token(user)
+
     return jsonify({
         'error': False,
         'message': 'Admin login successful',
+        'token': token,
+        'redirect': '/admin',
         'user': {
             'username': user.username,
             'instrument': user.instruments,
             'role': 'admin'
-        },
-        'redirect': '/admin'
+        }
     }), 200
     
     

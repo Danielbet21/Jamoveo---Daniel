@@ -5,6 +5,8 @@ import api from '../services/api';
 import '../styles/result_style.css';
 import { useUser } from '../context/UserContext';
 import socket from '../socket/socket';
+import LogoutButton from '../components/LogoutButton';
+
 
 const ResultPage = () => {
   const navigate = useNavigate();
@@ -15,6 +17,13 @@ const ResultPage = () => {
 
   const [results, setResults] = useState([]);
   const [error, setError] = useState('');
+
+  useEffect(() => { // Check if user is logged in -> else redirect to login page
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate("/login");
+    }
+  }, []);
 
   useEffect(() => {
     const fetchResults = async () => {
@@ -67,6 +76,7 @@ const ResultPage = () => {
           </div>
         ))}
       </div>
+        <LogoutButton />
     </div>
   );
 };

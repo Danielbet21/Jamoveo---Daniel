@@ -14,10 +14,10 @@ function LoginPage() {
   const [loginError, setLoginError] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
-
+  
   const isAdmin = location.pathname.includes('/admin');
   const loginUrl = isAdmin ? 'http://localhost:5000/api/admin/login' : 'http://localhost:5000/api/login';
-    
+  
   const handleChange = (e) => {
     // this function will handle the change in the input fields and update the state accordingly
     setFormData(prev => ({
@@ -26,17 +26,21 @@ function LoginPage() {
     }));
     setLoginError('');
   };
-
+  
   const handleSubmit = async (e) => {
-    // this function will handle the form submission and send the data to the backend
-    // it will also handle the response from the backend and redirect the user to the appropriate page
     e.preventDefault();
     try {
       const response = await axios.post(loginUrl, formData);
-      const { redirect, user } = response.data;
-
-      setUser(response.data.user) //  store user in global context
-      navigate(redirect); // go to the right page
+      const { redirect, user, token } = response.data;
+  
+      if (!user) {
+        throw new Error("User object missing from response");
+      }
+  
+      setUser(user); // update context
+      localStorage.setItem("user", JSON.stringify(user)); // ✅ use correct object
+      localStorage.setItem("token", token);
+      navigate(redirect);
     } catch (error) {
       if (error.response) {
         console.error("Login failed:", error.response.data);

@@ -11,6 +11,14 @@ export const LivePage = () => {
     const [autoScroll, setAutoScroll] = useState(false); // State to control auto-scrolling
     const { song } = location.state || {}; // Destructure song from location state
     const { user } = useUser(); // Get user from context
+
+  
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          navigate("/login");
+        }
+      }, []);
   
     useEffect(() => {
         // this function will be called when the component mounts

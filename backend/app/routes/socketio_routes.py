@@ -30,7 +30,6 @@ def register_socketio_events(socketio: SocketIO):
         This event is triggered by the admin when a song is selected.
         Broadcasts the song to all connected players.
         '''
-        print(f'[Socket] Song selected: {song_data}')
         emit('song_selected', song_data, broadcast=True, include_self=False)
 
     @socketio.on('quit_session')

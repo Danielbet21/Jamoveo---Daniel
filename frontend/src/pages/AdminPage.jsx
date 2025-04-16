@@ -1,10 +1,19 @@
 import React, { useState } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/admin_style.css';
+import LogoutButton from '../components/LogoutButton';
 
 const AdminPage = () => {
   const [query, setQuery] = useState('');
   const navigate = useNavigate();
+
+  useEffect(() => { //check if user is logged in -> if not, redirect to login page
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate("/admin/login");
+    }
+  }, []);
 
     const handleSearch = () => {
         //handle search use query to navigate to results page
@@ -32,6 +41,7 @@ const AdminPage = () => {
       >
         Let's Moveo!
       </button>
+      <LogoutButton />  
     </div>
   );
 };
