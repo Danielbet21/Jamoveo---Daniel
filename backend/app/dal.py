@@ -1,4 +1,8 @@
 from app.models.user import User
+from app.models.song import Song
+import logging
+logging.basicConfig(level=logging.INFO)
+
 
 '''
 This module defines the Data Access Layer (DAL).
@@ -41,8 +45,25 @@ class Dal:
     def get_users_by_instrument(self, instrument):
         return User.objects(instruments=instrument) if instrument else None
     
+    
     def get_user_by_username_and_password(self, username, password):
         user = self.get_user_by_username(username)
         if user and self.verify_password(user, password):
             return user
         return None
+    
+    
+    def search_songs_matches(self, search_string):
+        # This method search for songs in the database
+        # and returns a list of songs that match the search string.
+
+        songs = Song.objects(title__icontains=search_string) #insensitive search
+        if not songs:
+            songs = Song.objects(artist__icontains=search_string)
+        # Convert Mongo objects to JSON-serializable dicts 
+        # for easier handling in the API response.
+        return [{
+            'title': song.title,
+            'artist': song.artist,
+            'lyrics_and_chords': song.lyrics_and_chords
+        } for song in songs]

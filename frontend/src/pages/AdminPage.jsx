@@ -9,7 +9,7 @@ const AdminPage = () => {
     const handleSearch = () => {
         //handle search use query to navigate to results page
         if (query.trim()) {
-        navigate(`/results?query=${encodeURIComponent(query)}`);
+        navigate(`/result?query=${encodeURIComponent(query)}`);
         }
   };
 

@@ -4,8 +4,11 @@ import logging
 
 logging.basicConfig(level=logging.INFO)
 
-
+# ------------------------------------------------------
+# Player Signup Route
+# ------------------------------------------------------
 signup_bp = Blueprint('signup', __name__)
+
 @signup_bp.route('/signup', methods=['POST'])
 def signup():
     data = request.json
@@ -33,13 +36,13 @@ def signup():
         logging.info(e)
         return jsonify({'message': 'Signup failed due to a server error.'}), 505
     
-#----------------------------------------------------------------------------------
     
-login_bp = Blueprint('login', __name__)
 
 # ------------------------------------------------------
 # Player Login Route
 # ------------------------------------------------------
+login_bp = Blueprint('login', __name__)
+
 @login_bp.route('/login', methods=['POST'])
 def player_login():
     data = request.json
@@ -101,3 +104,35 @@ def admin_login():
         },
         'redirect': '/admin'
     }), 200
+    
+    
+#---------------------------------------------------------------------------
+# result route
+#---------------------------------------------------------------------------
+result_bp = Blueprint('result', __name__)
+
+@result_bp.route('/result', methods=['GET'])
+def results():
+    search_term = request.args.get('search_term', '').strip()  # Get search term from query parameter
+
+    if not search_term:
+        return jsonify({'error': True, 'message': 'Search term is empty'}), 400
+
+    dal = Dal()
+    try:
+        results = dal.search_songs_matches(search_term)
+        if not results:
+            return jsonify({
+                'error': True,
+                'message': 'No songs found'
+            }), 401
+        return jsonify({
+            'error': False,
+            'results': results
+        }), 200
+        
+    except Exception as e:
+        return jsonify({
+            'error': True,
+            'message': 'Server error while searching for songs'
+        }), 500
