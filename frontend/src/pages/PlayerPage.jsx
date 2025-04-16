@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import socket from '../socket/socket';
 import '../styles/player_style.css';
 import LogoutButton from '../components/LogoutButton';
+import babyImage from '../assets/baby_dav.png';
+
 
 const PlayerPage = () => {
   const navigate = useNavigate();
@@ -29,7 +31,11 @@ const PlayerPage = () => {
       <p className="text-message">Waiting for next song...</p>
       <div>
      <LogoutButton />
-    </div>
+      </div>
+      <div className='baby-dev'>
+        <p className="text-message-baby">If something looks a little off… please remember: I’m still a baby dev</p>
+        <img src={babyImage} alt="Baby Dav" className="baby-dev-image" />
+        </div>
     </div>
     
   );

@@ -18,3 +18,21 @@
   margin-bottom: 20px;
 }
 
+.baby-dev{
+  margin-top: 60px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.text-message-baby{
+  font-size: 24px;
+}
+
+.baby-dev-image{
+  width: 500px;
+  height: 300px;
+}
