@@ -59,7 +59,7 @@ def player_login():
         return jsonify({'error': True, 'message': 'Invalid credentials'}), 401
 
     if dal.check_if_admin(user):
-        return jsonify({'error': True, 'message': 'Admin must log in through /admin/login'}), 403
+        return jsonify({'error': True, 'message': 'Admin must log in through its own route'}), 403
 
     return jsonify({
         'error': False,
@@ -135,4 +135,30 @@ def results():
         return jsonify({
             'error': True,
             'message': 'Server error while searching for songs'
+        }), 500
+        
+#------------------------------------------------------------
+# Live Route
+#------------------------------------------------------------
+live_bp = Blueprint('live', __name__)
+
+@live_bp.route('/live', methods=['GET'])
+def live():
+    dal = Dal()
+    try:
+        live_songs = dal.get_live_songs()
+        if not live_songs:
+            return jsonify({
+                'error': True,
+                'message': 'No live songs found'
+            }), 401
+        return jsonify({
+            'error': False,
+            'live_songs': live_songs
+        }), 200
+        
+    except Exception as e:
+        return jsonify({
+            'error': True,
+            'message': 'Server error while fetching live songs'
         }), 500

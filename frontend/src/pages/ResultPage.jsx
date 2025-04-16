@@ -3,10 +3,13 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import CardSong from '../components/CardSong';
 import api from '../services/api';
 import '../styles/result_style.css';
+import { useUser } from '../context/UserContext';
+import socket from '../socket/socket';
 
 const ResultPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { user } = useUser();
   const queryParams = new URLSearchParams(location.search);
   const searchTerm = queryParams.get('query');
 
@@ -32,17 +35,17 @@ const ResultPage = () => {
   }, [searchTerm]);
 
   const handleSongSelect = (song) => {
+    socket.emit('select_song', song); // sends song to backend
     navigate('/live', { state: { song } });
   };
-
   const handleBack = () => {
-    navigate('/admin');
+    navigate('/admin'); // Navigate back to the admin page
   };
 
   return (
     <div className="result-container">
       <div className="message-container">
-        <h2 className="title-msg">Your choice maestro</h2>
+        <h2 className="title-msg">Search any song...</h2>
         <button onClick={handleBack}>Search again</button>
       </div>
 

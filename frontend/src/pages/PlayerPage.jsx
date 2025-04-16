@@ -7,13 +7,11 @@ const PlayerPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Listen for "song_selected" event from admin
     socket.on('song_selected', (songData) => {
-      // Optionally store song data in localStorage or context
-      navigate('/live');
+      console.log('🎵 Received song:', songData);
+      navigate('/live', { state: { song: songData } }); // Pass the song
     });
 
-    // Clean up socket event listener
     return () => {
       socket.off('song_selected');
     };

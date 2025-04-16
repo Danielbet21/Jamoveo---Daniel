@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useUser } from '../context/UserContext';
 
 function LoginPage() {
 
@@ -9,6 +10,7 @@ function LoginPage() {
     password: ''
   });
 
+  const { setUser } = useUser();
   const [loginError, setLoginError] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
@@ -31,9 +33,10 @@ function LoginPage() {
     e.preventDefault();
     try {
       const response = await axios.post(loginUrl, formData);
-      const { redirect } = response.data;
-      navigate(redirect); // Redirect to the specified URL
-      alert("Redirecting to: " + redirect);
+      const { redirect, user } = response.data;
+
+      setUser(response.data.user) //  store user in global context
+      navigate(redirect); // go to the right page
     } catch (error) {
       if (error.response) {
         console.error("Login failed:", error.response.data);
@@ -44,6 +47,7 @@ function LoginPage() {
       }
     }
   };
+
 
   return (
     <div className="signup-container">
