@@ -7,7 +7,7 @@ The app is built with **Flask + React + MongoDB**, using **Socket.IO** for real-
 ---
 
 ## 🚀 Live Demo
-  [https://jamoveo-daniel.vercel.app](https://jamoveo-daniel.vercel.app)
+##  [https://jamoveo-daniel.vercel.app](https://jamoveo-daniel.vercel.app)
 - 🔗 **Frontend (React + Vite)**:  
 
 
