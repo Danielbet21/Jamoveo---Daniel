@@ -9,5 +9,5 @@ export default defineConfig({
   server: {
     port: 3000
   },
-  base: './' // makes sure asset paths work when hosted
+  base: '/'
 })
