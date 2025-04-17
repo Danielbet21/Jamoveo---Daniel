@@ -28,8 +28,12 @@ const ResultPage = () => {
   useEffect(() => {
     const fetchResults = async () => {
       try {
+        const token = localStorage.getItem("token");
         const response = await api.get('/result', {
           params: { search_term: searchTerm },
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         });
         setResults(response.data.results);
       } catch (err) {

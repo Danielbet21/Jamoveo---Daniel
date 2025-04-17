@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import api from '../services/api';
+import { useNavigate } from 'react-router-dom';
 import '../styles/signup_style.css';
 
 function SignupPage() {
@@ -8,9 +9,11 @@ function SignupPage() {
     // usestate hook - to manage the state of the form data
     username: '',
     password: '',
-    instrument: ''
+    instrument: '',
+    role: 'admin' // default role for admin signup
   });
 
+  const navigate = useNavigate(); // this hook will help us navigate to different pages
   const [usernameError, setUsernameError] = useState(''); // state to manage username error messages
 
   const handleChange = (e) => {
@@ -52,8 +55,9 @@ function SignupPage() {
     }
 
     try {
-      await api.post('/signup', formData);
-      alert("Signup successful! You can now log in.");
+      await api.post('/admin/signup', formData);
+      // Redirect to login page after successful signup
+      navigate('/admin/login');
     } catch (error) {
      
       if (error.response) {
@@ -74,7 +78,7 @@ function SignupPage() {
   return (
     <div className="signup-container">
       <div className='signup-header'>
-        <h2>Sign Up to JaMoveo</h2>
+        <h2>Sign Up to JaMoveo Maestro</h2>
       </div>
 
       <form onSubmit={handleSubmit} className="signup-form">
@@ -87,7 +91,7 @@ function SignupPage() {
           required
         />
         {usernameError && <div className="error-message">{usernameError}</div>}
-        {/* Display username error message */}
+        {/* Display username errors messages */}
 
         <input
           type="password"
@@ -111,11 +115,21 @@ function SignupPage() {
           <option value="keyboard">🎹 Keyboard</option>
           <option value="vocals">🎤 Vocals</option>
         </select>
+
+        <input
+          type="text"
+          name="admin"
+          placeholder="Admin"
+          value="Admin"
+          readOnly
+          style={{ color: 'grey' }}
+        />   
         <button type="submit">Let's Jam!</button>
+         
       </form>
       <div className="signup-footer">
         <p>Already have an account? <a href="/">Log in</a></p>
-        <p>Are you an admin? <a href="/admin/signup">Sign up here</a></p>
+        <p>Not an admin? <a href="/signup">Sign up here</a></p>
       </div>
     </div>
   );

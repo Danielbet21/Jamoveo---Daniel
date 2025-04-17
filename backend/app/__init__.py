@@ -8,7 +8,7 @@ from flask_cors import CORS
 from dotenv import load_dotenv
 from flask_socketio import SocketIO
 from flask_mongoengine import MongoEngine
-from app.routes.auth_routes import signup_bp, login_bp, result_bp, live_bp
+from app.routes.auth_routes import signup_bp, login_bp, result_bp, live_bp, signup_admin_bp
 from app.routes.socketio_routes import register_socketio_events
 
 load_dotenv()
@@ -30,7 +30,7 @@ def create_app():
 
     # --- Initialize Extensions ---
     db.init_app(app)
-    CORS(app, supports_credentials=True)
+    CORS(app, resources={r"/api/*": {"origins": "*"}})
     socketio.init_app(app)
     register_socketio_events(socketio)
 
@@ -39,6 +39,7 @@ def create_app():
     app.register_blueprint(login_bp, url_prefix="/api")
     app.register_blueprint(result_bp, url_prefix='/api')
     app.register_blueprint(live_bp, url_prefix='/api')
+    app.register_blueprint(signup_admin_bp, url_prefix='/api')
 
 
     return app

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useUser } from '../context/UserContext';
 
@@ -16,7 +16,7 @@ function LoginPage() {
   const location = useLocation();
   
   const isAdmin = location.pathname.includes('/admin');
-  const loginUrl = isAdmin ? 'http://localhost:5000/api/admin/login' : 'http://localhost:5000/api/login';
+  const loginUrl = isAdmin ? '/admin/login' : '/login';
   
   const handleChange = (e) => {
     // this function will handle the change in the input fields and update the state accordingly
@@ -30,7 +30,7 @@ function LoginPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(loginUrl, formData);
+      const response = await api.post(loginUrl, formData);
       const { redirect, user, token } = response.data;
   
       if (!user) {
@@ -85,6 +85,13 @@ function LoginPage() {
       {!isAdmin && (
         <div className="signup-footer">
           <p>Don't have an account? <a href="/signup">Sign up</a></p>
+          <p>login as admin? <a href="/admin/login">Click here</a></p>
+        </div>
+      )}
+      {isAdmin && (
+        <div className="signup-footer">
+          <p>Don't have an account? <a href="/admin/signup">Sign up</a></p>
+          <p>login as user? <a href="/login">Click here</a></p>
         </div>
       )}
     </div>

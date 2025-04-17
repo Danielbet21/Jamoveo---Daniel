@@ -37,6 +37,39 @@ def signup():
         logging.info(e)
         return jsonify({'message': 'Signup failed due to a server error.'}), 505
     
+#------------------------------------------------------
+# Admin Signup Route
+# -----------------------------------------------------
+signup_admin_bp = Blueprint('signup_admin', __name__)
+
+@signup_admin_bp.route('/admin/signup', methods=['POST'])
+def admin_signup():
+    data = request.json
+    username = data.get('username')
+    password = data.get('password')
+    instrument = data.get('instrument')
+    role = 'admin' # Set role to admin as default
+
+    if not all([username, password, instrument]):
+        return jsonify({'message': 'Missing fields'}), 400
+
+    dal = Dal()  # Init Dal
+    
+    try:
+        user = dal.create_user(username, password, instrument, role)
+        return jsonify({
+            'message': 'User created',
+            'user': {
+                'username': user.username,
+                'instrument': user.instruments,
+                'role': role
+            }
+        }), 201
+    except ValueError as e:
+        return jsonify({'message': str(e)}), 409  # Username exists
+    except Exception as e:
+        logging.info(e)
+        return jsonify({'message': 'Signup failed due to a server error.'}), 505
     
 
 # ------------------------------------------------------
@@ -133,7 +166,7 @@ def results():
             return jsonify({
                 'error': True,
                 'message': 'No songs found'
-            }), 401
+            }), 404
         return jsonify({
             'error': False,
             'results': results

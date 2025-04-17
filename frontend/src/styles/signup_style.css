@@ -42,6 +42,7 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     animation: rainbow-shift 5s linear infinite;
+    margin-top: -50px;
   }
   
   @keyframes rainbow-shift {
