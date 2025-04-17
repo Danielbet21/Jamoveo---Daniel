@@ -27,6 +27,8 @@ def create_app():
 
     # --- App Configuration ---
     app.config.from_object('app.config.Config')
+    app.config["MONGODB_HOST"] = "mongodb://mongo:27017/jamoveo"
+
 
     # --- Initialize Extensions ---
     db.init_app(app)
