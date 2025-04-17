@@ -10,7 +10,6 @@ __pycache__/
 .env
 
 # Logs
-*/public
 logs
 *.log
 npm-debug.log*
