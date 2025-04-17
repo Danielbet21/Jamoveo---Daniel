@@ -154,6 +154,7 @@ result_bp = Blueprint('result', __name__)
 
 @result_bp.route('/result', methods=['GET'])
 def results():
+    logging.info('Fetching results')
     search_term = request.args.get('search_term', '').strip()  # Get search term from query parameter
 
     if not search_term:
