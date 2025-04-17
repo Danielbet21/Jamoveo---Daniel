@@ -31,7 +31,7 @@ def create_app():
     # --- Initialize Extensions ---
     db.init_app(app)
     CORS(app, resources={r"/api/*": {"origins": "https://jamoveo-daniel-cxob.vercel.app"}}, supports_credentials=True, methods=["GET", "POST", "OPTIONS"])
-    socketio.init_app(app)
+    socketio.init_app(app, cors_allowed_origins=["https://jamoveo-daniel-cxob.vercel.app"])
     register_socketio_events(socketio)
 
     # --- Register Blueprints ---
