@@ -28,10 +28,10 @@ def create_app():
 
     db.init_app(app)
 
-    CORS(app, resources={r"/api/*": {"origins": [
+    CORS(app, origins=[
         "https://jamoveo-daniel-cxob.vercel.app",
         "http://localhost:5173"
-    ]}}, supports_credentials=True)
+    ])
 
     socketio.init_app(app)
 
