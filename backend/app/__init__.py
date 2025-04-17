@@ -30,7 +30,8 @@ def create_app():
 
     # --- Initialize Extensions ---
     db.init_app(app)
-    CORS(app, resources={r"/api/*": {"origins": "*"}})
+    # CORS(app, resources={r"/api/*": {"origins": "*"}})
+    CORS(app)
     socketio.init_app(app)
     register_socketio_events(socketio)
 
