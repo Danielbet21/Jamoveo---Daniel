@@ -15,7 +15,7 @@ load_dotenv()
 
 db = MongoEngine()
 # socketio = SocketIO(cors_allowed_origins="*")
-socketio = SocketIO(cors_allowed_origins=["https://jamoveo-daniel-cxob.vercel.app"])
+socketio = SocketIO(cors_allowed_origins=["https://jamoveo-daniel-cxob.vercel.app"], async_mode='eventlet')
 
 def create_app():
     app = Flask(__name__)
