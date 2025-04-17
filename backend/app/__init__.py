@@ -14,7 +14,6 @@ from app.routes.socketio_routes import register_socketio_events
 load_dotenv()
 
 db = MongoEngine()
-# socketio = SocketIO(cors_allowed_origins="*")
 socketio = SocketIO(cors_allowed_origins=["https://jamoveo-daniel-cxob.vercel.app"], async_mode='eventlet')
 
 def create_app():
@@ -31,8 +30,7 @@ def create_app():
 
     # --- Initialize Extensions ---
     db.init_app(app)
-    # CORS(app, resources={r"/api/*": {"origins": "*"}})
-    CORS(app, resources={r"/api/*": {"origins": "https://jamoveo-daniel-cxob.vercel.app"}}, supports_credentials=True)
+    CORS(app, resources={r"/api/*": {"origins": "https://jamoveo-daniel-cxob.vercel.app"}}, supports_credentials=True, methods=["GET", "POST", "OPTIONS"])
     socketio.init_app(app)
     register_socketio_events(socketio)
 
@@ -43,5 +41,15 @@ def create_app():
     app.register_blueprint(live_bp, url_prefix='/api')
     app.register_blueprint(signup_admin_bp, url_prefix='/api')
 
+    # --- Handle OPTIONS preflight for CORS ---
+    @app.before_request
+    def handle_options():
+        if request.method == 'OPTIONS':
+            response = app.make_default_options_response()
+            headers = response.headers
+            headers['Access-Control-Allow-Origin'] = "https://jamoveo-daniel-cxob.vercel.app"
+            headers['Access-Control-Allow-Headers'] = "Content-Type, Authorization"
+            headers['Access-Control-Allow-Methods'] = "GET, POST, OPTIONS"
+            return response
 
     return app
