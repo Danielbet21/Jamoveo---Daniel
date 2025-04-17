@@ -51,5 +51,13 @@ def create_app():
             headers['Access-Control-Allow-Headers'] = "Content-Type, Authorization"
             headers['Access-Control-Allow-Methods'] = "GET, POST, OPTIONS"
             return response
+        
+    @app.after_request
+    def apply_cors_headers(response):
+        response.headers["Access-Control-Allow-Origin"] = "https://jamoveo-daniel-cxob.vercel.app"
+        response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
+        response.headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS"
+        response.headers["Access-Control-Allow-Credentials"] = "true"
+        return response
 
     return app
