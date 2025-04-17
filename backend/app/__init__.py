@@ -30,6 +30,7 @@ def create_app():
 
     # --- Config ---
     app.config.from_object('app.config.Config')
+    app.config["MONGODB_HOST"] = os.environ.get("MONGO_URI")
 
     # --- Extensions ---
     db.init_app(app)
