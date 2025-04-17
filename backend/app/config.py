@@ -5,6 +5,6 @@ It includes settings for the secret key, database URI, and other configurations.
 class Config:
     SECRET_KEY = "bt3tn95t84ht08tn08h0"
 
-    MONGODB_SETTINGS = {
-        'host': 'mongodb://jamoveo-mongo:27017/jamoveo'
-    }
+#    MONGODB_SETTINGS = {
+#        'host': 'mongodb://jamoveo-mongo:27017/jamoveo'
+#    }
