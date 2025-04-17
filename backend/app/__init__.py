@@ -14,7 +14,8 @@ from app.routes.socketio_routes import register_socketio_events
 load_dotenv()
 
 db = MongoEngine()
-socketio = SocketIO(cors_allowed_origins="*")
+# socketio = SocketIO(cors_allowed_origins="*")
+socketio = SocketIO(cors_allowed_origins=["https://jamoveo-daniel-cxob.vercel.app"])
 
 def create_app():
     app = Flask(__name__)
@@ -31,7 +32,7 @@ def create_app():
     # --- Initialize Extensions ---
     db.init_app(app)
     # CORS(app, resources={r"/api/*": {"origins": "*"}})
-    CORS(app)
+    CORS(app, resources={r"/api/*": {"origins": "https://jamoveo-daniel-cxob.vercel.app"}}, supports_credentials=True)
     socketio.init_app(app)
     register_socketio_events(socketio)
 
