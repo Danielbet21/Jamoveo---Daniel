@@ -1,10 +1,9 @@
 '''
 This file contains the configuration settings for the Flask application.
-It includes settings for the secret key, database URI, and other configurations.
 '''
+import os
 class Config:
-    SECRET_KEY = "bt3tn95t84ht08tn08h0"
+   
 
-#    MONGODB_SETTINGS = {
-#        'host': 'mongodb://jamoveo-mongo:27017/jamoveo'
-#    }
+    SECRET_KEY = str(os.getenv("SECRET_KEY", "default_secret"))
+

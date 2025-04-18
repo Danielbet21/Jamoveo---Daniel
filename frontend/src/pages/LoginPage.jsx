@@ -27,7 +27,7 @@ function LoginPage() {
     setLoginError('');
   };
   
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => { 
     e.preventDefault();
     try {
       const response = await api.post(loginUrl, formData);
@@ -38,7 +38,7 @@ function LoginPage() {
       }
   
       setUser(user); // update context
-      localStorage.setItem("user", JSON.stringify(user)); // ✅ use correct object
+      localStorage.setItem("user", JSON.stringify(user));
       localStorage.setItem("token", token);
       navigate(redirect);
     } catch (error) {

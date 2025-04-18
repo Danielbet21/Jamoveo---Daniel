@@ -1,5 +1,9 @@
 import React, { createContext, useContext, useState } from 'react';
 
+/*
+This context is used to make a user object available to all components in the app.
+*/
+
 const UserContext = createContext(null);
 
 export const useUser = () => useContext(UserContext);

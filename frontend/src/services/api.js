@@ -1,7 +1,12 @@
 import axios from 'axios';
 
+/*
+This module creates an axios instance with a base URL and a timeout of 5000ms.
+axios is a promise-based HTTP client for the browser.
+*/
+
 const api = axios.create({
-  baseURL: 'http://localhost:5000/api' ,  
+  baseURL: 'http://104.155.152.39:5000/api' ,  
   timeout: 5000,
 });
 

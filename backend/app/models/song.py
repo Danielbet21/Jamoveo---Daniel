@@ -1,6 +1,6 @@
 from mongoengine import Document, StringField, ListField, DictField
 '''
-This module defines the Song model for the application.
+This module defines the Song model for the app.
 It uses MongoEngine to define the schema for song data in the database.
 '''
 

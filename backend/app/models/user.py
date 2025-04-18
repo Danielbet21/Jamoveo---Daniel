@@ -1,6 +1,6 @@
 from mongoengine import Document, StringField, ListField
 '''
-This module defines the User model for the application.
+This module defines the User model for the app.
 It uses MongoEngine to define the schema for user data in the database.
 '''
 

@@ -13,7 +13,7 @@ export const LivePage = () => {
     const { user } = useUser(); // Get user from context
 
   
-    useEffect(() => {
+    useEffect(() => { // Check if user is logged in
         const token = localStorage.getItem("token");
         if (!token) {
           navigate("/login");
@@ -51,7 +51,7 @@ export const LivePage = () => {
     }, []);
   
   
-  useEffect(() => {// Listen for quit signal from admin
+  useEffect(() => {// Listen to admin's actions
     socket.on('quit_session', () => {
         if (user.role === 'admin') {
             navigate('/admin');

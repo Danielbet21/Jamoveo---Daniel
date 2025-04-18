@@ -13,7 +13,7 @@ function SignupPage() {
     role: 'admin' // default role for admin signup
   });
 
-  const navigate = useNavigate(); // this hook will help us navigate to different pages
+  const navigate = useNavigate(); // hook to navigate to different pages
   const [usernameError, setUsernameError] = useState(''); // state to manage username error messages
 
   const handleChange = (e) => {
@@ -90,8 +90,8 @@ function SignupPage() {
           onChange={handleChange}
           required
         />
-        {usernameError && <div className="error-message">{usernameError}</div>}
         {/* Display username errors messages */}
+        {usernameError && <div className="error-message">{usernameError}</div>}
 
         <input
           type="password"

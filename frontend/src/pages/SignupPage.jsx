@@ -86,8 +86,8 @@ function SignupPage() {
           onChange={handleChange}
           required
         />
-        {usernameError && <div className="error-message">{usernameError}</div>}
         {/* Display username error message */}
+        {usernameError && <div className="error-message">{usernameError}</div>}
 
         <input
           type="password"
