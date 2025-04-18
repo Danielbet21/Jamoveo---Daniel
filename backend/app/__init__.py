@@ -33,6 +33,7 @@ def create_app():
     # --- App Configuration ---
     app.config.from_object('app.config.Config')
     app.config["MONGODB_HOST"] = "mongodb://mongo:27017/jamoveo"
+    app.config["SECRET_KEY"] = str(os.getenv("SECRET_KEY", "default_secret"))
 
 
     # --- Initialize Extensions ---
