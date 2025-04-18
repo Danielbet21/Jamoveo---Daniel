@@ -16,10 +16,15 @@ load_dotenv()
 db = MongoEngine()
 socketio = SocketIO(cors_allowed_origins="*")
 
+'''
+This function creates and configures the Flask application instance 
+along with its extensions and blueprints.
+'''
+
 def create_app():
     app = Flask(__name__)
     
-    #TODO: Configure logging
+
     logging.basicConfig(level=logging.DEBUG) 
     handler = logging.StreamHandler()
     app.logger.addHandler(handler)

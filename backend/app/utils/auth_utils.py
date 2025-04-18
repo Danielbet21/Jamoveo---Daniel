@@ -6,6 +6,10 @@ from dotenv import load_dotenv
 load_dotenv()
 SECRET_KEY = os.getenv("JWT_SECRET_KEY")
 
+'''
+This module provides utility functions for generating and decoding JWT tokens.
+'''
+
 def generate_token(user):
     payload = {
         "username": user.username,
