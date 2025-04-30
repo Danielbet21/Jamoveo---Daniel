@@ -5,6 +5,11 @@ import logging
 
 logging.basicConfig(level=logging.INFO)
 
+"""
+This module is responsible for handling routes the app uses.
+It uses Flask's Blueprint.
+"""
+
 # ------------------------------------------------------
 # Player Signup Route
 # ------------------------------------------------------
@@ -20,7 +25,7 @@ def signup():
     if not all([username, password, instrument]):
         return jsonify({'message': 'Missing fields'}), 400
 
-    dal = Dal()  # Init Dal
+    dal = Dal() 
     
     try:
         user = dal.create_user(username, password, instrument)
@@ -53,7 +58,7 @@ def admin_signup():
     if not all([username, password, instrument]):
         return jsonify({'message': 'Missing fields'}), 400
 
-    dal = Dal()  # Init Dal
+    dal = Dal()  
     
     try:
         user = dal.create_user(username, password, instrument, role)
